@@ -1,9 +1,8 @@
 const express = require('express');
 const app = express();
-const multer = require('multer');
-const path = require('path');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const path = require('path');
 const JobRoutes = require("./Routes/JobRoutes");
 const AuthRouter = require('./Routes/AuthRouter');
 const ProductRouter = require('./Routes/ProductRouter');
@@ -18,14 +17,15 @@ const allowedOrigins = ['https://alfarah-client.vercel.app'];
 
 // CORS middleware configuration
 app.use(cors({
-    origin: allowedOrigins,  // Allow requests only from this origin
+    origin: allowedOrigins,  // Allow requests from this origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
-    preflightContinue: false,  // Let the CORS middleware handle the OPTIONS request
-    optionsSuccessStatus: 200,  // For legacy browsers
+    credentials: true,  // Allow cookies if necessary
+    preflightContinue: false,  // Let CORS handle OPTIONS requests
+    optionsSuccessStatus: 200,  // Some browsers (IE) need this for successful preflight
 }));
 
-// Handle preflight requests
+// Handle preflight OPTIONS request
 app.options('*', cors());
 
 // Static file configuration
@@ -45,7 +45,7 @@ app.use('/products', ProductRouter);
 app.use("/jobs", JobRoutes);
 app.use('/api/events', eventRoutes);
 
-// Start server
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
