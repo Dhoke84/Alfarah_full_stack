@@ -17,13 +17,14 @@ const allowedOrigins = ['https://alfarah-client.vercel.app'];
 
 // CORS middleware configuration
 app.use(cors({
-    origin: allowedOrigins,  // Allow requests from this origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed methods
-    allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
-    credentials: true,  // Allow cookies if necessary
-    preflightContinue: false,  // Let CORS handle OPTIONS requests
-    optionsSuccessStatus: 200,  // Some browsers (IE) need this for successful preflight
+    origin: allowedOrigins,  // Allow requests only from the listed origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept', 'X-Requested-With', 'Access-Control-Allow-Headers'], // Allow these headers
+    credentials: true,  // Allow cookies if needed
+    preflightContinue: false,  // Let CORS handle preflight OPTIONS requests
+    optionsSuccessStatus: 200  // Handle successful preflight responses
 }));
+
 
 // Handle preflight OPTIONS request
 app.options('*', cors());
