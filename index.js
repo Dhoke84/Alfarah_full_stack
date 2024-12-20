@@ -12,21 +12,21 @@ require('dotenv').config();
 require('./Models/db');
 const PORT = process.env.PORT || 8080;
 
-app.get('/', (req, res) => {
-    res.status(200).json({ message: "Hello World" });
-});
-
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-app.use(bodyParser.json());
-app.use(express.static('uploads'));
 const allowedOrigins = ['https://alfarah-client.vercel.app'];
 app.use(cors({
     origin: allowedOrigins,
    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+app.get('/', (req, res) => {
+    res.status(200).json({ message: "Hello World" });
+});
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use(bodyParser.json());
+app.use(express.static('uploads'));
 app.use('/auth', AuthRouter);
 app.use('/products', ProductRouter);
 app.use("/jobs", JobRoutes);
