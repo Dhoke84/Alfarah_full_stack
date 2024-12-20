@@ -1,0 +1,29 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+
+# npm package-lock files
+package-lock.json
+
+# Directory where builds will be stored
+/dist
+
+# macOS Finder metadata
+.DS_Store
+
+# IDE settings
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Build output
+build/
