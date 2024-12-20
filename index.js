@@ -21,7 +21,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(bodyParser.json());
 app.use(express.static('uploads'));
-app.use(cors());
+app.use(cors({
+    origin: ["https://alfarah-client.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use('/auth', AuthRouter);
 app.use('/products', ProductRouter);
 app.use("/jobs", JobRoutes);
