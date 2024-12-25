@@ -15,7 +15,8 @@ const PORT = process.env.PORT || 8080;
 // Allowed origins based on environment
 const allowedOrigins = [
     "http://localhost:3000", // Development frontend
-    "https://alfarah-client.vercel.app" // Production frontend
+    "https://alfarah-client.vercel.app",
+    "https://frontend-alfarah.vercel.app" // Production frontend
 ];
 
 // CORS middleware
