@@ -12,30 +12,48 @@ require('dotenv').config();
 require('./Models/db');
 const PORT = process.env.PORT || 8080;
 
+// Allowed origins based on environment
+const allowedOrigins = [
+    "http://localhost:3000", // Development frontend
+    "https://alfarah-client.vercel.app" // Production frontend
+];
+
+// CORS middleware
+app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g., mobile apps or Postman)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed methods
+    credentials: true // Allow credentials (cookies, authorization headers, etc.)
+}));
+
+// Handle preflight requests
+app.options('*', cors());
+
+// Test route
 app.get('/', (req, res) => {
     res.status(200).json({ message: "Hello World" });
 });
 
-
+// Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use(bodyParser.json());
 app.use(express.static('uploads'));
-app.use(cors({
-    origin: ["https://alfarah-client.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}));
+
+// Routes
 app.use('/auth', AuthRouter);
 app.use('/products', ProductRouter);
 app.use("/jobs", JobRoutes);
 app.use('/api/events', eventRoutes);
 
-
-
-
+// Start server
 app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`)
-})
+    console.log(`Server is running on ${PORT}`);
+});
 
 module.exports = app;
